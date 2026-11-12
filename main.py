@@ -147,250 +147,49 @@ CODIGO_PENAL_TEXTO = (
 )
 
 # ==========================================
-# 3. MOTOR LOCAL DE RESPALDO RÁPIDO AMPLIADO
+# 3. MOTOR LOCAL DE RESPALDO INFALIBLE
 # ==========================================
-def motor_local_rapido(situacion):
-    s = situacion.lower()
-    articulos = []
-
-    # Tránsito y Circulación
-    if "temeraria" in s or "peligro" in s or "zig-zag" in s:
-        articulos.append(("Art. 4 - Conducción temeraria", "2,000 MXN y/o pérdida de 3 puntos."))
-    if "daño" in s and ("propiedad" in s or "mobiliario" in s or "choca" in s):
-        articulos.append(("Art. 5 - Daño a la propiedad", "2,500 MXN y reparación total."))
-    if "semáforo" in s or "stop" in s or "roja" in s or "rojo" in s:
-        articulos.append(("Art. 6 - No cumplir semáforos", "500 MXN por infracción."))
-    if "dirección contraria" in s or "contraria" in s:
-        articulos.append(("Art. 7 - Dirección contraria", "3,000 MXN y/o pérdida 1 punto."))
-    if "alcohol" in s or "ebrio" in s or "sustancias" in s or "drogas" in s:
-        articulos.append(("Art. 8 - Conducir bajo efectos de alcohol/sustancias", "2,500 MXN y/o pérdida 6 puntos."))
-    if "velocidad" in s or "rápido" in s:
-        articulos.append(("Art. 10 - Exceso de velocidad", "1,500 MXN y retirada 2 puntos."))
-    if ("licencia" in s or "carné" in s or "sin carnet" in s) and "arma" not in s:
-        articulos.append(("Art. 11 - Conducir sin licencia", "4,000 MXN e ingreso a prisión preventiva de 24h."))
-    if "carrera" in s:
-        articulos.append(("Art. 12 - Carreras clandestinas", "6,500 MXN, suspensión de licencia y 1 mes de prisión."))
-    if "mal estacionado" in s:
-        articulos.append(("Art. 13 - Mal estacionado", "750 MXN o depósito (1,000 MXN grúa)."))
-    if "obstruyendo" in s or "bloquea" in s:
-        articulos.append(("Art. 14 - Estacionado obstruyendo circulación", "1,800 MXN o depósito (2,000 MXN grúa)."))
-    if "ambulancia" in s or "emergencia" in s or "ceder el paso" in s:
-        articulos.append(("Art. 15 - No ceder el paso a emergencias", "1,500 MXN y retirada de licencia por 1 mes."))
-    if "luces" in s:
-        articulos.append(("Art. 16 - Uso de luces obligatorio", "500 MXN."))
-    if "mecánica" in s or "faltas técnicas" in s:
-        articulos.append(("Art. 17 - Faltas técnicas/mecánicas", "900 MXN y retirada 2 puntos."))
-    if "arrojar" in s or "tirar objetos" in s:
-        articulos.append(("Art. 18 - Arrojar objetos a la vía", "500 MXN."))
-    if "adelant" in s:
-        articulos.append(("Art. 20 - Adelantamiento erróneo", "1,200 MXN y retirada 2 puntos."))
-    if "ignora" in s or "control" in s or "convoy" in s:
-        articulos.append(("Art. 21 - Ignorar agente o control", "2,150 MXN y retirada 2 puntos."))
-    if "movil" in s or "móvil" in s or "auriculares" in s:
-        articulos.append(("Art. 22 - Uso de móvil/auriculares", "400 MXN y retirada 1 punto."))
-    if "acera" in s or "césped" in s or "fuera de la calzada" in s:
-        articulos.append(("Art. 23 - Circular fuera de la calzada", "850 MXN y retirada 2 puntos."))
-    if "claxon" in s or "acústico" in s:
-        articulos.append(("Art. 24 - Uso indebido de claxon", "380 MXN."))
-    if "huir" in s or "huyendo" in s or "accidente" in s:
-        articulos.append(("Art. 25 - Huir de un accidente", "4,700 MXN y disposición ante ministerio público."))
-    if "accidente mayor" in s:
-        articulos.append(("Art. 26 - Causar accidente mayor", "8,000 MXN y retirada de licencia."))
-    if "matrícula" in s:
-        articulos.append(("Art. 27 - Circular sin matrícula", "4,000 MXN y depósito."))
-    if "cruzar" in s and "calle" in s:
-        articulos.append(("Art. 28 - Cruzar indebidamente la calle", "600 MXN."))
-
-    # Agresiones, Orden Público y Agravantes
-    if "insult" in s or "reincidente" in s:
-        articulos.append(("Art. 2 - Agravantes generales", "11 meses de prisión federal o 5,000 MXN."))
-    if "agresión" in s or "empujones" in s or "golpe" in s:
-        articulos.append(("Art. 30 - Agresión verbal/física", "2,000 MXN (verbal) o 2 años prisión + indemnización (física)."))
-    if "orden público" in s or "gritos" in s or "disturbio" in s:
-        articulos.append(("Art. 32 - Alterar el orden público", "1 mes de prisión."))
-    if "grupo criminal" in s or "banda" in s:
-        articulos.append(("Art. 36 - Pertenencia a grupo criminal", "2 años de prisión."))
-    if "discrimin" in s or "color de piel" in s or "etnia" in s:
-        articulos.append(("Art. 37 - Agresión por discriminación", "Multa/sanción de 2 años e indemnización de 15,000 MXN."))
-    if "suplant" in s:
-        articulos.append(("Art. 38 - Suplantación de identidad", "12,000 MXN y 1 año y 6 meses de prisión."))
-    if "acoso" in s:
-        articulos.append(("Art. 39 - Acoso reiterado", "6,000 MXN y 1 año de prisión."))
-
-    # Hurtos, Armas, Homicidios y Delitos contra el Estado
-    if "allanamient" in s or "rompiendo la puerta" in s or "propiedad privada" in s:
-        articulos.append(("Art. 41 - Allanamiento de morada", "7,000 MXN y 6 meses prisión temporal."))
-    if "usurpación" in s:
-        articulos.append(("Art. 42 - Usurpación", "20,000 MXN y 2 años prisión."))
-    if "hurto" in s or "robar" in s or "robo" in s:
-        articulos.append(("Art. 43 - Hurto", "15,000 MXN y 1 año prisión."))
-    if "arma blanca" in s or "cuchillo" in s or "navaja" in s:
-        articulos.append(("Art. 44 - Asalto con arma blanca", "10,000 MXN y 1 año y 6 meses prisión."))
-    if "arma de fuego" in s or "pistola" in s or "dispar" in s:
-        articulos.append(("Art. 45 - Asalto con arma de fuego", "20,000 MXN y 2 años prisión."))
-        articulos.append(("Art. 48 - Posesión de arma sin licencia", "17,000 MXN y 1 año prisión."))
-    if "comercio" in s and "arma" in s:
-        articulos.append(("Art. 50 - Comercio ilegal de armas", "30,000 MXN y 2 años prisión."))
-    if "homicidio" in s or "matar" in s or "asesin" in s:
-        articulos.append(("Art. 54 - Homicidio", "3 años prisión."))
-    if "secuestr" in s:
-        articulos.append(("Art. 56 - Secuestro", "3 años prisión."))
-    if "extorsi" in s:
-        articulos.append(("Art. 57 - Extorsión", "10,000 MXN y 2 años prisión."))
-    if "amenaz" in s:
-        articulos.append(("Art. 58 - Amenazas", "7,000 MXN y 1 año prisión."))
-    if "falsedad" in s or "documento" in s or "falsific" in s:
-        articulos.append(("Art. 59 - Falsedad documental", "70,000 a 100,000 MXN y 2 años prisión."))
-    if "estafa" in s or "engaño" in s:
-        articulos.append(("Art. 61 - Estafa", "12,000 MXN e indemnización."))
-    if "desobed" in s:
-        articulos.append(("Art. 62 - Desobediencia a la autoridad", "20,000 MXN."))
-    if "reporte falso" in s or "llamada falsa" in s:
-        articulos.append(("Art. 63 - Reporte falso a emergencias", "27,000 MXN y 4 meses prisión temporal."))
-    if "restringid" in s:
-        articulos.append(("Art. 64 - Invadir zona restringida", "14,000 MXN y 2 días detención temporal ERLC."))
-    if "estado" in s or "objetos del estado" in s:
-        articulos.append(("Art. 65 - Robo de objeto del Estado", "50,000 MXN y 2 años prisión."))
-    if "resistencia" in s:
-        articulos.append(("Art. 67 - Resistencia a la autoridad", "14,000 MXN."))
-    if "evasión" in s or "evadir" in s or "escap" in s:
-        articulos.append(("Art. 68 - Evasión a la autoridad", "9,600 MXN y 1 mes prisión."))
-    if "soborn" in s or "dinero a un policía" in s:
-        articulos.append(("Art. 69 - Soborno a funcionario público", "37,000 MXN y 3 años prisión."))
-    if "terroris" in s:
-        articulos.append(("Art. 70 - Terrorismo", "500,000 MXN y 15 años prisión."))
-    if ("policía" in s or "policia" in s or "funcionario" in s or "agente" in s) and ("atentar" in s or "integridad" in s or "herir" in s or "equipo" in s):
-        articulos.append(("Art. 71 - Atentar contra integridad de funcionario público", "2 años prisión."))
-    if "secretos" in s or "revela" in s:
-        articulos.append(("Art. 81 - Revelación de secretos", "380,000 MXN e inhabilitación."))
-    if "cohecho" in s:
-        articulos.append(("Art. 82/85 - Cohecho", "250,000 MXN, 3 años de prisión e inhabilitación."))
-    if "tráfico de influencias" in s:
-        articulos.append(("Art. 86 - Tráfico de influencias", "360,000 MXN, 1 año prisión e inhabilitación."))
-    if "malversación" in s or "fondos" in s:
-        articulos.append(("Art. 87 - Malversación", "350,000 MXN y 4 años prisión."))
-
-    if not articulos:
-        articulos.append(("Art. 1 - Disposición General del Código Penal", "Sujeto a revisión de los hechos por la autoridad competente."))
-
-    # Ordenar y eliminar duplicados manteniendo orden
-    vistos = set()
-    articulos_unicos = []
-    for item in articulos:
-        if item[0] not in vistos:
-            vistos.add(item[0])
-            articulos_unicos.append(item)
-
-    lista_art = [f"• {item[0]}" for item in articulos_unicos]
-    lista_conc = [f"• {item[0]}: {item[1]}" for item in articulos_unicos]
-
-    return f"**Artículos aplicables:**\n" + "\n".join(lista_art) + "\n\n**Conclusión:**\nSanciones correspondientes aplicadas:\n" + "\n".join(lista_conc)
-
-def obtener_respuesta_ia(situacion):
-    if not situacion or len(situacion.strip()) < 3:
-        return motor_local_rapido(situacion)
-
-    if not groq_client:
-        return motor_local_rapido(situacion)
-
-    system_prompt = (
-        "Eres un asistente legal experto del Código Penal Federal de México. "
-        "Lee la situación y extrae TODOS los artículos aplicables del siguiente código completo, sin omitir ninguno:\n\n"
-        f"{CODIGO_PENAL_TEXTO}\n\n"
-        "FORMATO OBLIGATORIO:\n"
-        "**Artículos aplicables:**\n"
-        "• Art. XX - Nombre del delito\n\n"
-        "**Conclusión:**\n"
-        "Sanciones correspondientes aplicadas:\n"
-        "• Art. XX - Nombre del delito: [Multa y Prisión]"
-    )
-
-    try:
-        completion = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f'SITUACIÓN: "{situacion}"'}
-            ],
-            temperature=0.1,
-            max_tokens=4096,
-        )
-        res = completion.choices[0].message.content
-        if res and res.strip():
-            return res
-    except Exception as e:
-        print(f"Aviso IA: {e}")
-
-    return motor_local_rapido(situacion)
-
-# ==========================================
-# 4. CONFIGURACIÓN DEL CLIENTE Y COMANDOS
-# ==========================================
-intents = discord.Intents.default()
-intents.message_content = True
-intents.messages = True
-intents.guilds = True
-
-class BotClient(discord.Client):
-    def __init__(self):
-        super().__init__(intents=intents, status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="el Código Penal Federal"))
-        self.tree = app_commands.CommandTree(self)
-
-    async def setup_hook(self):
-        await self.tree.sync()
-        print("Comandos slash sincronizados correctamente.")
-
-client = BotClient()
-
-@client.event
-async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="el Código Penal Federal"))
-    print(f"Bot conectado exitosamente y en línea con luz verde como {client.user}")
-
-@client.tree.command(
-    name="codigo-penal",
-    description="Analiza una situación y busca los artículos y sanciones.",
-)
-@app_commands.describe(
-    situacion="Describe detalladamente los hechos ocurridos."
-)
-async def codigo_penal(interaction: discord.Interaction, situacion: str):
-    await interaction.response.defer(thinking=True, ephemeral=False)
-    try:
-        resultado = await asyncio.to_thread(obtener_respuesta_ia, situacion)
-        embed = discord.Embed(description=resultado.strip()[:4090], color=0xFFFFFF)
-        await interaction.followup.send(embed=embed, ephemeral=False)
-    except Exception as e:
-        await interaction.followup.send(f"❌ Error al procesar: `{str(e)}`", ephemeral=False)
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith("!codigo"):
-        situacion = message.content[len("!codigo"):].strip()
-        if not situacion:
-            await message.channel.send("⚠️ Escribe una situación. Ej: `!codigo exceso de velocidad`")
-            return
-
-        msg_proceso = await message.channel.send("🔍 Analizando situación...")
-        try:
-            resultado = await asyncio.to_thread(obtener_respuesta_ia, situacion)
-            embed = discord.Embed(description=resultado.strip()[:4090], color=0xFFFFFF)
-            await msg_proceso.edit(content=None, embed=embed)
-        except Exception as e:
-            await msg_proceso.edit(content=f"❌ Error al procesar: `{str(e)}`")
-        return
-
-# ==========================================
-# 5. INICIO DE LA APLICACIÓN
-# ==========================================
-if __name__ == "__main__":
-    keep_alive()
-    DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-    
-    if DISCORD_TOKEN:
-        client.run(DISCORD_TOKEN.strip())
-    else:
-        print("ERROR: No se encontró la variable DISCORD_TOKEN.")
+REGLAS_LOCALES = [
+    (["atenuante", "confesar", "cooperar", "cómplice"], "Art. 1.3 - Circunstancias atenuantes", "Disminución de gravedad/pena según criterio judicial."),
+    (["agravante", "reincidente", "insultar", "discriminar"], "Art. 2 - Circunstancias agravantes", "+11 meses de prisión federal o 5,000 MXN."),
+    (["temeraria", "zig-zag", "peligro"], "Art. 4 - Conducción temeraria", "2,000 MXN y/o pérdida de 3 puntos."),
+    (["daño a propiedad", "mobiliario", "romper señal"], "Art. 5 - Daño a propiedad privada o pública con vehículo", "2,500 MXN y reparación total."),
+    (["semáforo", "stop", "luz roja"], "Art. 6 - No cumplir semáforos", "500 MXN por cada semáforo ignorado."),
+    (["dirección contraria", "sentido contrario", "contramano"], "Art. 7 - Conducir en dirección contraria", "3,000 MXN y/o pérdida de 1 punto."),
+    (["alcohol", "borracho", "ebrio", "sustancias", "drogas", "copas"], "Art. 8 - Conducir bajo efectos de alcohol o sustancias", "2,500 MXN y/o pérdida de 6 puntos."),
+    (["arma en vehículo", "arma en el coche", "disparos al aire"], "Art. 9 - Posesión de arma no autorizada en vehículo", "Art. 48 + 4,000 MXN e incautación temporal del vehículo."),
+    (["velocidad", "rápido", "corriendo"], "Art. 10 - Incumplir límites de velocidad", "1,500 MXN y retirada de 2 puntos."),
+    (["conducir sin licencia", "sin carnet", "sin carné", "manejar sin licencia"], "Art. 11 - Conducir sin licencia", "4,000 MXN e ingreso a prisión preventiva de 24h."),
+    (["carrera clandestina", "carreras"], "Art. 12 - Carreras clandestinas", "6,500 MXN, suspensión de licencia y 1 mes de prisión."),
+    (["mal estacionado", "zona prohibida"], "Art. 13 - Mal estacionado", "750 MXN o traslado al depósito (1,000 MXN grúa)."),
+    (["obstruyendo", "bloqueando circulación"], "Art. 14 - Estacionado obstruyendo circulación vial", "1,800 MXN o depósito (2,000 MXN grúa)."),
+    (["emergencia", "ambulancia", "ceder el paso"], "Art. 15 - No ceder el paso a servicios de emergencia", "1,500 MXN y retirada de licencia por 1 mes."),
+    (["luces", "sin luces"], "Art. 16 - Uso de luces obligatorio", "500 MXN."),
+    (["mecánica", "faltas técnicas", "roto"], "Art. 17 - Vehículo con faltas técnicas/mecánicas", "900 MXN y retirada de 2 puntos."),
+    (["arrojar objeto", "tirar basura"], "Art. 18 - Arrojar objetos a la vía", "500 MXN."),
+    (["adelantamiento"], "Art. 20 - Adelantamientos erróneos o peligrosos", "1,200 MXN y retirada de 2 puntos."),
+    (["ignorar agente", "evadir control", "convoy"], "Art. 21 - Ignorar agente o evadir control", "2,150 MXN y retirada de 2 puntos."),
+    (["móvil", "movil", "celular", "auriculares"], "Art. 22 - Uso de móvil o auriculares conduciendo", "400 MXN y retirada de 1 punto."),
+    (["acera", "césped", "fuera de la calzada"], "Art. 23 - Circular por fuera de la calzada", "850 MXN y retirada de 2 puntos."),
+    (["claxon", "bocina", "acústico"], "Art. 24 - Uso indebido de claxon", "380 MXN."),
+    (["huir de un accidente", "huir del accidente", "sin socorrer"], "Art. 25 - Huir de un accidente sin socorrer", "4,700 MXN y disposición ante ministerio público."),
+    (["accidente mayor"], "Art. 26 - Causar accidente mayor", "8,000 MXN y retirada de licencia."),
+    (["matrícula", "sin placa", "sin matricula"], "Art. 27 - Circular sin matrícula", "4,000 MXN y depósito (1,000 MXN grúa)."),
+    (["cruzar la calle", "cruzar indebidamente"], "Art. 28 - Cruzar la calle indebidamente", "600 MXN."),
+    (["agresión verbal", "insulto"], "Art. 30 - Agresión verbal", "2,000 MXN."),
+    (["agresión física", "golpear", "pegar", "empujones"], "Art. 30 - Agresión física", "2 años de prisión e indemnización de 2,000 a 6,000 MXN."),
+    (["no leer derechos", "derechos al detener"], "Art. 31 - Funcionario que no lee derechos al detener", "Suspensión de 1 año y 5,000 MXN."),
+    (["orden público", "disturbio", "escándalo"], "Art. 32 - Alterar el orden público", "1 mes de prisión."),
+    (["productos no autorizados", "venta ilegal"], "Art. 33 - Comercialización de productos no autorizados", "2,000 MXN y confiscación."),
+    (["grupo criminal", "banda", "cartel", "mafia"], "Art. 36 - Pertenecer a grupo criminal", "2 años de prisión (1 año por trabajar/incentivar)."),
+    (["color de piel", "etnia", "nacionalidad", "racismo"], "Art. 37 - Agresión por discriminación", "Multa/sanción de 2 años e indemnización de 15,000 MXN."),
+    (["suplantación", "hacerse pasar"], "Art. 38 - Suplantación de identidad", "12,000 MXN y 1 año y 6 meses de prisión."),
+    (["acoso"], "Art. 39 - Acoso reiterado", "6,000 MXN y 1 año de prisión."),
+    (["cónyuge", "violencia doméstica", "expareja"], "Art. 40 - Menoscabo o lesión a cónyuge/pareja", "5,000 MXN y 2 años de prisión."),
+    (["allanamiento", "entrar sin permiso", "propiedad privada"], "Art. 41 - Allanamiento de morada", "7,000 MXN y 6 meses de prisión temporal."),
+    (["usurpación", "apoderarse"], "Art. 42 - Usurpación", "20,000 MXN y 2 años de prisión."),
+    (["hurto", "robo menor", "robar tienda"], "Art. 43 - Hurto", "15,000 MXN y 1 año de prisión."),
+    (["arma blanca", "cuchillo", "navaja"], "Art. 44 - Asalto con arma blanca", "10,000 MXN y 1 año y 6 meses de prisión."),
+    (["asalto con arma", "robo con arma", "atraco"], "Art. 45 - Asalto con arma de fuego", "20,000 MXN y 2 años de prisión."),
+    (["robo con fuerza", "intimidación", "robo a banco"], "Art. 46 - Apropiación con fuerza o intimidación", "16,000 MXN y 2 años de prisión."),
+    (["daños al estado", "daños propiedad del estado"], "Art. 47
