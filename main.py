@@ -13,7 +13,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return 'Bot Código Penal activo 24/7' A Trabajr!
+    return 'Bot Código Penal Federal activo 24/7 A Trabar'
 
 def run():
     port = int(os.environ.get("PORT", 8080))
@@ -133,33 +133,11 @@ CODIGO_PENAL_TEXTO = "\n".join([
     "Art. 67: Resistencia a la autoridad (impedir detención por fuerza/amenazas/acoso): 14,000 MXN.",
     "Art. 68: Evasión a la autoridad (evitar arresto): 9,600 MXN y 1 mes de prisión.",
     "Art. 69: Soborno (incentivar a funcionario público para beneficio propio): 37,000 MXN y 3 años de prisión.",
-    "Art. 70: Terrorismo (acts contra ciudadanía/Estado para inestabilidad nacional): 500,000 MXN y 15 años de prisión (juicio en Tribunal Federal).",
+    "Art. 70: Terrorismo (actos contra ciudadanía/Estado para inestabilidad nacional): 500,000 MXN y 15 años de prisión (juicio en Tribunal Federal).",
     "Art. 71: Atentar contra integridad de funcionario público o robar equipo policial/militar: 2 años de prisión.",
     "Art. 72: Funcionario que dicta resolución arbitraria a sabiendas: inhabilitación permanente de cargo público.",
     "Art. 73: Funcionario que nombra ilegalmente a un cargo público: 200,000 MXN e inhabilitación permanente (igual sanción para quien acepta sabiendo que no cumple requisitos).",
     "Art. 74: Funcionario que abandona su misión para no perseguir delitos: inhabilitación de cargo y empleo.",
     "Art. 75: Funcionario que intencionadamente deja de promover la persecución de delitos: inhabilitación permanente.",
     "Art. 76: Funcionario que calumnie o injurie a una institución del Estado públicamente: 300,000 MXN y disculpa pública.",
-    "Art. 77: Negativa abierta de funcionario a cumplir resoluciones judiciales: 230,000 MXN e inhabilitación. (Exento si el mandato es infracción manifiesta de ley).",
-    "Art. 78: Funcionario que no comparece ante la Suprema Corte u otra autoridad requerida: 90,000 MXN.",
-    "Art. 79: Funcionario que sustrae, destruye u oculta documentos bajo su custodia: 50,000 MXN e inhabilitación.",
-    "Art. 80: Contaminar u obstruir cadena de custodia de evidencia: 155,000 MXN e inhabilitación.",
-    "Art. 81: Funcionario que revela secretos o información reservada de su oficio: 380,000 MXN e inhabilitación.",
-    "Art. 82: Cohecho (solicitar dádiva/favor para acto contrario a deberes): 250,000 MXN, 3 años de prisión e inhabilitación.",
-    "Art. 83: Cohecho por acto propio del cargo: 190,000 MXN, 1 año de prisión e inhabilitación.",
-    "Art. 84: Recibir regalo u ofrenda en consideración a su cargo: 150,000 MXN.",
-    "Art. 85: Definición general de los artículos 82 a 83 como cohecho.",
-    "Art. 86: Tráfico de influencias (influir en otro funcionario para beneficio propio o ajeno): 360,000 MXN, 1 año de prisión e inhabilitación.",
-    "Art. 87: Malversación (sustraer o consentir sustracción de caudales públicos con ánimo de lucro): 350,000 MXN y 4 años de prisión.",
-    "Art. 88: Concertación ilegal en contratación pública con ánimo de lucro."
-])
-
-# ==========================================
-# 3. MOTOR LOCAL DE RESPALDO INFALIBLE
-# ==========================================
-REGLAS_LOCALES = [
-    (["atenuante", "confesar", "cooperar", "cómplice"], "Art. 1.3 - Circunstancias atenuantes", "Disminución de gravedad/pena según criterio judicial."),
-    (["agravante", "reincidente", "insultar", "discriminar"], "Art. 2 - Circunstancias agravantes", "+11 meses de prisión federal o 5,000 MXN."),
-    (["temeraria", "zig-zag", "peligro"], "Art. 4 - Conducción temeraria", "2,000 MXN y/o pérdida de 3 puntos."),
-    (["daño a propiedad", "mobiliario", "romper señal"], "Art. 5 - Daño a propiedad privada o pública con vehículo", "2,500 MXN y reparación total."),
-    (["semáforo", "stop", "luz roja"],
+    "Art. 77: Negativa abierta de
