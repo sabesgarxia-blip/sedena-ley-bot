@@ -1,5 +1,8 @@
 import os
+import re
 import asyncio
+import itertools
+import unicodedata
 from threading import Thread
 import discord
 from discord import app_commands
@@ -13,7 +16,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return 'Bot Código Penal Federal activo 24/7 A Trabar'
+    return 'Bot Código Penal Federal activo 24/7'
 
 def run():
     port = int(os.environ.get("PORT", 8080))
@@ -154,97 +157,178 @@ CODIGO_PENAL_TEXTO = "\n".join([
     "Art. 88: Concertación ilegal en contratación pública con ánimo de lucro."
 ])
 
+def normalizar_texto(texto: str) -> str:
+    if not texto:
+        return ""
+    nfkd = unicodedata.normalize("NFKD", texto.lower())
+    sin_tildes = "".join(c for c in nfkd if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9\s]", " ", sin_tildes)
+
+def generar_variantes_evasion() -> list[str]:
+    """Genera miles de combinaciones de huida/escape de policías, polis, elementos y autoridades."""
+    verbos = [
+        "huir", "huida", "huyendo", "huido", "huirse", "me fui huyendo", "salir huyendo",
+        "escapar", "escaparse", "escapando", "escapado", "escape", "me escape", "salir corriendo",
+        "evadir", "evadirse", "evadiendo", "evadido", "evasion",
+        "fugarse", "fuga", "fugando", "fugado",
+        "correr", "corriendo", "pelarse", "pelarme", "abrirse", "abrirme",
+        "darse a la fuga", "darme a la fuga", "salir por piernas", "tirarse a la fuga",
+        "zafarse", "zafarme", "esquivar", "esquivando", "esquive",
+        "salir volando", "pirarse", "pirarme", "largarse", "largarme"
+    ]
+    conectores = [
+        "de", "del", "de la", "de las", "de los", "de lo",
+        "a", "al", "a la", "a las", "a los", "a lo",
+        "contra", "hacia", "ante"
+    ]
+    objetivos = [
+        "policia", "policias", "policiaas", "policiaz", "policiaa",
+        "poli", "polis", "poliz", "poliss",
+        "elemento", "elementos", "los elementos", "lo elementos", "del elemento", "de los elementos", "de lo elementos",
+        "autoridad", "autoridades", "la autoridad", "las autoridades",
+        "arresto", "el arresto", "un arresto",
+        "detencion", "la detencion", "una detencion",
+        "justicia", "la justicia",
+        "patrulla", "patrullas", "la patrulla", "las patrullas",
+        "federal", "federales", "los federales", "lo federales",
+        "sedena", "militar", "militares", "los militares",
+        "guardia", "guardias", "la guardia",
+        "agente", "agentes", "los agentes", "lo agentes",
+        "funcionario", "funcionarios", "los funcionarios",
+        "oficial", "oficiales", "los oficiales",
+        "reten", "el reten", "control", "el control", "un control"
+    ]
+
+    variantes = set()
+    for v, c, o in itertools.product(verbos, conectores, objetivos):
+        variantes.add(f"{v} {c} {o}")
+
+    # Variantes directas sin conector o con frases habituales
+    directas = [
+        "huir de lo polis", "huir de lo policiaas", "escapar de los elementos",
+        "escapar de lo elementos", "escapar de la policia", "escapar de las policias",
+        "huir de la policia", "huir de las policias", "huir de los polis",
+        "escapar de los polis", "escapar de lo polis", "escapar de policiaas",
+        "huir de policiaas", "huir de los elementos", "huir de lo elementos",
+        "escapar de los polis", "escapar de los elementos", "escapar de la autoridad",
+        "evadir a la policia", "evadir a los polis", "evadir a los elementos",
+        "evadir a lo polis", "evadir a lo elementos", "evadir el arresto",
+        "evitar el arresto", "evitar arresto", "evitar la detencion",
+        "darse a la fuga", "salir huyendo de la policia", "salir huyendo de los polis",
+        "salir huyendo de los elementos", "escapar corriendo de la policia",
+        "escapar corriendo de los polis", "escapar corriendo de los elementos",
+        "me escape de la policia", "me escape de los polis", "me escape de los elementos",
+        "me fui huyendo de la policia", "me fui huyendo de los polis",
+        "me fui huyendo de los elementos", "huida de la policia", "huida de los polis",
+        "huida de los elementos", "fuga de la policia", "fuga de los polis",
+        "fuga de los elementos", "escapar de reten", "huir de reten",
+        "escapar de un control", "huir de un control", "escapar del reten"
+    ]
+    for d in directas:
+        variantes.add(normalizar_texto(d))
+
+    return list(variantes)
+
+VARIANTES_EVASION = generar_variantes_evasion()
+
 # ==========================================
 # 3. MOTOR LOCAL DE RESPALDO INFALIBLE
 # ==========================================
+# Reglas específicas y de varias palabras para no invadir otros artículos
 REGLAS_LOCALES = [
-    (["atenuante", "confesar", "cooperar", "cómplice"], "Art. 1.3 - Circunstancias atenuantes", "Disminución de gravedad/pena según criterio judicial."),
+    (["atenuante", "confesar", "cooperar", "complice"], "Art. 1.3 - Circunstancias atenuantes", "Disminución de gravedad/pena según criterio judicial."),
     (["agravante", "reincidente", "insultar", "discriminar"], "Art. 2 - Circunstancias agravantes", "+11 meses de prisión federal o 5,000 MXN."),
-    (["temeraria", "zig-zag", "peligro"], "Art. 4 - Conducción temeraria", "2,000 MXN y/o pérdida de 3 puntos."),
-    (["daño a propiedad", "mobiliario", "romper señal"], "Art. 5 - Daño a propiedad privada o pública con vehículo", "2,500 MXN y reparación total."),
-    (["semáforo", "stop", "luz roja"], "Art. 6 - No cumplir semáforos", "500 MXN por cada semáforo ignorado."),
-    (["dirección contraria", "sentido contrario", "contramano"], "Art. 7 - Conducir en dirección contraria", "3,000 MXN y/o pérdida de 1 punto."),
-    (["alcohol", "borracho", "ebrio", "sustancias", "drogas", "copas"], "Art. 8 - Conducir bajo efectos de alcohol o sustancias", "2,500 MXN y/o pérdida de 6 puntos."),
-    (["arma en vehículo", "arma en el coche", "disparos al aire"], "Art. 9 - Posesión de arma no autorizada en vehículo", "Art. 48 + 4,000 MXN e incautación temporal del vehículo."),
-    (["velocidad", "rápido", "corriendo"], "Art. 10 - Incumplir límites de velocidad", "1,500 MXN y retirada de 2 puntos."),
-    (["conducir sin licencia", "sin carnet", "sin carné", "manejar sin licencia"], "Art. 11 - Conducir sin licencia", "4,000 MXN e ingreso a prisión preventiva de 24h."),
-    (["carrera clandestina", "carreras"], "Art. 12 - Carreras clandestinas", "6,500 MXN, suspensión de licencia y 1 mes de prisión."),
-    (["mal estacionado", "zona prohibida"], "Art. 13 - Mal estacionado", "750 MXN o traslado al depósito (1,000 MXN grúa)."),
-    (["obstruyendo", "bloqueando circulación"], "Art. 14 - Estacionado obstruyendo circulación vial", "1,800 MXN o depósito (2,000 MXN grúa)."),
-    (["emergencia", "ambulancia", "ceder el paso"], "Art. 15 - No ceder el paso a servicios de emergencia", "1,500 MXN y retirada de licencia por 1 mes."),
-    (["luces", "sin luces"], "Art. 16 - Uso de luces obligatorio", "500 MXN."),
-    (["mecánica", "faltas técnicas", "roto"], "Art. 17 - Vehículo con faltas técnicas/mecánicas", "900 MXN y retirada de 2 puntos."),
-    (["arrojar objeto", "tirar basura"], "Art. 18 - Arrojar objetos a la vía", "500 MXN."),
-    (["adelantamiento"], "Art. 20 - Adelantamientos erróneos o peligrosos", "1,200 MXN y retirada de 2 puntos."),
-    (["ignorar agente", "evadir control", "convoy"], "Art. 21 - Ignorar agente o evadir control", "2,150 MXN y retirada de 2 puntos."),
-    (["móvil", "movil", "celular", "auriculares"], "Art. 22 - Uso de móvil o auriculares conduciendo", "400 MXN y retirada de 1 punto."),
-    (["acera", "césped", "fuera de la calzada"], "Art. 23 - Circular por fuera de la calzada", "850 MXN y retirada de 2 puntos."),
-    (["claxon", "bocina", "acústico"], "Art. 24 - Uso indebido de claxon", "380 MXN."),
-    (["huir de un accidente", "huir del accidente", "sin socorrer"], "Art. 25 - Huir de un accidente sin socorrer", "4,700 MXN y disposición ante ministerio público."),
-    (["accidente mayor"], "Art. 26 - Causar accidente mayor", "8,000 MXN y retirada de licencia."),
-    (["matrícula", "sin placa", "sin matricula"], "Art. 27 - Circular sin matrícula", "4,000 MXN y depósito (1,000 MXN grúa)."),
-    (["cruzar la calle", "cruzar indebidamente"], "Art. 28 - Cruzar la calle indebidamente", "600 MXN."),
-    (["agresión verbal", "insulto"], "Art. 30 - Agresión verbal", "2,000 MXN."),
-    (["agresión física", "golpear", "pegar", "empujones"], "Art. 30 - Agresión física", "2 años de prisión e indemnización de 2,000 a 6,000 MXN."),
-    (["no leer derechos", "derechos al detener"], "Art. 31 - Funcionario que no lee derechos al detener", "Suspensión de 1 año y 5,000 MXN."),
-    (["orden público", "disturbio", "escándalo"], "Art. 32 - Alterar el orden público", "1 mes de prisión."),
-    (["productos no autorizados", "venta ilegal"], "Art. 33 - Comercialización de productos no autorizados", "2,000 MXN y confiscación."),
-    (["grupo criminal", "banda", "cartel", "mafia"], "Art. 36 - Pertenecer a grupo criminal", "2 años de prisión (1 año por trabajar/incentivar)."),
-    (["color de piel", "etnia", "nacionalidad", "racismo"], "Art. 37 - Agresión por discriminación", "Multa/sanción de 2 años e indemnización de 15,000 MXN."),
-    (["suplantación", "hacerse pasar"], "Art. 38 - Suplantación de identidad", "12,000 MXN y 1 año y 6 meses de prisión."),
-    (["acoso"], "Art. 39 - Acoso reiterado", "6,000 MXN y 1 año de prisión."),
-    (["cónyuge", "violencia doméstica", "expareja"], "Art. 40 - Menoscabo o lesión a cónyuge/pareja", "5,000 MXN y 2 años de prisión."),
-    (["allanamiento", "entrar sin permiso", "propiedad privada"], "Art. 41 - Allanamiento de morada", "7,000 MXN y 6 meses de prisión temporal."),
-    (["usurpación", "apoderarse"], "Art. 42 - Usurpación", "20,000 MXN y 2 años de prisión."),
-    (["hurto", "robo menor", "robar tienda"], "Art. 43 - Hurto", "15,000 MXN y 1 año de prisión."),
-    (["arma blanca", "cuchillo", "navaja"], "Art. 44 - Asalto con arma blanca", "10,000 MXN y 1 año y 6 meses de prisión."),
-    (["asalto con arma", "robo con arma", "atraco"], "Art. 45 - Asalto con arma de fuego", "20,000 MXN y 2 años de prisión."),
-    (["robo con fuerza", "intimidación", "robo a banco"], "Art. 46 - Apropiación con fuerza o intimidación", "16,000 MXN y 2 años de prisión."),
-    (["daños al estado", "daños propiedad del estado"], "Art. 47 - Daños a propiedades del Estado", "25,000 MXN e indemnización obligatoria."),
-    (["arma sin licencia", "porte ilegal", "posesión de arma", "pistola sin licencia"], "Art. 48 - Posesión de arma sin licencia", "17,000 MXN y 1 año de prisión."),
-    (["comercio ilegal de armas", "vender armas", "trafico de armas"], "Art. 50 - Comercio ilegal de armas de fuego", "30,000 MXN y 2 años de prisión."),
-    (["intento de homicidio"], "Art. 51/52 - Intento de homicidio", "2 años de prisión (extremidades) / 1 año y medio (mano armada)."),
-    (["homicidio", "asesinato", "matar"], "Art. 54 - Homicidio", "3 años de prisión (2 años y medio si es con extremidades)."),
-    (["homicidio múltiple", "masacre"], "Art. 55 - Homicidio múltiple", "5 años de prisión o 3 años extra por víctima adicional."),
-    (["secuestro", "privación de libertad", "raptar"], "Art. 56 - Secuestro", "3 años de prisión."),
-    (["extorsión", "chantaje"], "Art. 57 - Extorsión", "10,000 MXN y 2 años de prisión."),
-    (["amenaza"], "Art. 58 - Amenazas", "7,000 MXN y 1 año de prisión."),
-    (["falsedad documental", "documento falso", "falsificar"], "Art. 59 - Falsedad documental", "70,000 a 100,000 MXN y 2 años de prisión."),
-    (["sin identificación", "sin papeles", "indebida documentación"], "Art. 60 - Indebida documentación", "10,000 MXN (+20,000 MXN y retiro si es auto)."),
-    (["estafa", "fraude", "engaño"], "Art. 61 - Estafa", "12,000 MXN e indemnización de daños."),
-    (["desobedecer", "desobediencia"], "Art. 62 - Desobedecer orden de autoridad", "20,000 MXN (48,000 MXN y 6 meses si es resolución judicial)."),
-    (["reporte falso", "llamada falsa"], "Art. 63 - Reporte falso a servicios de emergencia", "27,000 MXN y 4 meses de prisión temporal."),
-    (["zona restringida", "instalaciones restringidas", "base militar"], "Art. 64 - Invadir instalaciones restringidas", "14,000 MXN y 2 días de detención temporal ERLC."),
-    (["robo al estado", "objeto del estado", "robar patrulla"], "Art. 65 - Robo de objeto perteneciente al Estado", "50,000 MXN y 2 años de prisión."),
-    (["suplantar funcionario", "falso policía", "falso militar"], "Art. 66 - Suplantación de identidad de miembro del Estado", "10,000 MXN extra a falsificación y 2 años de prisión."),
-    (["resistencia", "resistirse"], "Art. 67 - Resistencia a la autoridad", "14,000 MXN."),
-    (["huida de la justicia", "evasión", "fuga", "evitar arresto", "escapar de la policía"], "Art. 68 - Evasión a la autoridad", "9,600 MXN y 1 mes de prisión."),
-    (["soborno", "sobornar", "ofrecer dinero"], "Art. 69 - Soborno", "37,000 MXN y 3 años de prisión."),
-    (["terrorismo", "atentado", "bomba"], "Art. 70 - Terrorismo", "500,000 MXN y 15 años de prisión."),
-    (["atentar contra funcionario", "herir policía", "disparar a policía", "robar equipo policial"], "Art. 71 - Atentar contra integridad de funcionario público o robar equipo", "2 años de prisión."),
-    (["resolución arbitraria", "prevaricación"], "Art. 72 - Dictar resolución arbitraria", "Inhabilitación permanente de cargo público."),
+    (["conduccion temeraria", "manejo temerario", "zig zag"], "Art. 4 - Conducción temeraria", "2,000 MXN y/o pérdida de 3 puntos."),
+    (["dano a propiedad", "mobiliario urbano", "romper senal"], "Art. 5 - Daño a propiedad privada o pública con vehículo", "2,500 MXN y reparación total."),
+    (["no cumplir semaforo", "pasarse semaforo", "pasarse un alto", "luz roja"], "Art. 6 - No cumplir semáforos", "500 MXN por cada semáforo ignorado."),
+    (["direccion contraria", "sentido contrario", "ir en contramano"], "Art. 7 - Conducir en dirección contraria", "3,000 MXN y/o pérdida de 1 punto."),
+    (["ebrio", "borracho", "alcoholizado", "conducir ebrio", "manejar ebrio", "bajo efectos del alcohol", "bajo efectos de drogas"], "Art. 8 - Conducir bajo efectos de alcohol o sustancias", "2,500 MXN y/o pérdida de 6 puntos."),
+    (["arma en vehiculo", "arma en el coche", "arma en el carro", "disparos al aire"], "Art. 9 - Posesión de arma no autorizada en vehículo", "Art. 48 + 4,000 MXN e incautación temporal del vehículo."),
+    (["exceso de velocidad", "limite de velocidad", "ir a exceso de velocidad"], "Art. 10 - Incumplir límites de velocidad", "1,500 MXN y retirada de 2 puntos."),
+    (["conducir sin licencia", "manejar sin licencia", "sin carnet", "sin carne"], "Art. 11 - Conducir sin licencia", "4,000 MXN e ingreso a prisión preventiva de 24h."),
+    (["carrera clandestina", "carreras ilegales", "correr carreras"], "Art. 12 - Carreras clandestinas", "6,500 MXN, suspensión de licencia y 1 mes de prisión."),
+    (["mal estacionado", "estacionado en zona prohibida"], "Art. 13 - Mal estacionado", "750 MXN o traslado al depósito (1,000 MXN grúa)."),
+    (["obstruyendo la circulacion", "bloqueando la circulacion", "estacionado obstruyendo"], "Art. 14 - Estacionado obstruyendo circulación vial", "1,800 MXN o depósito (2,000 MXN grúa)."),
+    (["no ceder el paso", "ceder el paso a ambulancia", "ceder el paso a emergencia"], "Art. 15 - No ceder el paso a servicios de emergencia", "1,500 MXN y retirada de licencia por 1 mes."),
+    (["sin luces", "uso de luces"], "Art. 16 - Uso de luces obligatorio", "500 MXN."),
+    (["faltas tecnicas", "fallas mecanicas", "vehiculo roto"], "Art. 17 - Vehículo con faltas técnicas/mecánicas", "900 MXN y retirada de 2 puntos."),
+    (["arrojar objetos", "tirar basura a la via"], "Art. 18 - Arrojar objetos a la vía", "500 MXN."),
+    (["adelantamiento indebido", "adelantamiento peligroso", "adelantar en curva"], "Art. 20 - Adelantamientos erróneos o peligrosos", "1,200 MXN y retirada de 2 puntos."),
+    (["ignorar agente", "ignorar escolta", "ignorar convoy"], "Art. 21 - Ignorar agente o evadir control", "2,150 MXN y retirada de 2 puntos."),
+    (["usar el movil", "usar el celular", "auriculares conduciendo"], "Art. 22 - Uso de móvil o auriculares conduciendo", "400 MXN y retirada de 1 punto."),
+    (["circular por la acera", "circular por el cesped", "fuera de la calzada"], "Art. 23 - Circular por fuera de la calzada", "850 MXN y retirada de 2 puntos."),
+    (["uso indebido del claxon", "tocar el claxon sin motivo"], "Art. 24 - Uso indebido de claxon", "380 MXN."),
+    (["huir de un accidente", "huir del accidente", "fuga de accidente", "sin socorrer heridos"], "Art. 25 - Huir de un accidente sin socorrer", "4,700 MXN y disposición ante ministerio público."),
+    (["causar accidente mayor", "accidente mayor"], "Art. 26 - Causar accidente mayor", "8,000 MXN y retirada de licencia."),
+    (["sin matricula", "matricula ilegible", "sin placa"], "Art. 27 - Circular sin matrícula", "4,000 MXN y depósito (1,000 MXN grúa)."),
+    (["cruzar indebidamente", "cruzar la calle indebidamente"], "Art. 28 - Cruzar la calle indebidamente", "600 MXN."),
+    (["agresion verbal", "insultar a alguien"], "Art. 30 - Agresión verbal", "2,000 MXN."),
+    (["agresion fisica", "golpear a alguien", "pegar a alguien"], "Art. 30 - Agresión física", "2 años de prisión e indemnización de 2,000 a 6,000 MXN."),
+    (["no leer derechos", "no leyo derechos"], "Art. 31 - Funcionario que no lee derechos al detener", "Suspensión de 1 año y 5,000 MXN."),
+    (["alterar el orden publico", "alteracion del orden publico"], "Art. 32 - Alterar el orden público", "1 mes de prisión."),
+    (["productos no autorizados", "venta de productos ilegales"], "Art. 33 - Comercialización de productos no autorizados", "2,000 MXN y confiscación."),
+    (["grupo criminal", "organizacion criminal", "pertenece a un cartel", "pertenece a una banda"], "Art. 36 - Pertenecer a grupo criminal", "2 años de prisión (1 año por trabajar/incentivar)."),
+    (["discriminacion racial", "agresion por etnia", "agresion por nacionalidad"], "Art. 37 - Agresión por discriminación", "Multa/sanción de 2 años e indemnización de 15,000 MXN."),
+    (["suplantacion de identidad", "hacerse pasar por otra persona"], "Art. 38 - Suplantación de identidad", "12,000 MXN y 1 año y 6 meses de prisión."),
+    (["acoso reiterado", "acosar a alguien"], "Art. 39 - Acoso reiterado", "6,000 MXN y 1 año de prisión."),
+    (["violencia domestica", "violencia familiar", "agredir a su pareja", "agredir a su conyuge"], "Art. 40 - Menoscabo o lesión a cónyuge/pareja", "5,000 MXN y 2 años de prisión."),
+    (["allanamiento de morada", "entrar a propiedad privada sin permiso", "invadir propiedad privada"], "Art. 41 - Allanamiento de morada", "7,000 MXN y 6 meses de prisión temporal."),
+    (["usurpacion de inmueble", "usurpacion de derecho"], "Art. 42 - Usurpación", "20,000 MXN y 2 años de prisión."),
+    (["hurto", "robo sin violencia", "robar una tienda"], "Art. 43 - Hurto", "15,000 MXN y 1 año de prisión."),
+    (["asalto con arma blanca", "robo con arma blanca", "amenazar con cuchillo", "amenazar con navaja"], "Art. 44 - Asalto con arma blanca", "10,000 MXN y 1 año y 6 meses de prisión."),
+    (["asalto con arma de fuego", "robo con arma de fuego", "robo agravado", "atraco a mano armada"], "Art. 45 - Asalto con arma de fuego", "20,000 MXN y 2 años de prisión."),
+    (["robo con fuerza", "robo con intimidacion", "robo a banco"], "Art. 46 - Apropiación con fuerza o intimidación", "16,000 MXN y 2 años de prisión."),
+    (["danos a propiedad del estado", "danos a propiedades del estado", "destruir propiedad del estado"], "Art. 47 - Daños a propiedades del Estado", "25,000 MXN e indemnización obligatoria."),
+    (["arma sin licencia", "arma ilegal", "porte ilegal de arma", "posesion de arma sin licencia", "pistola sin licencia", "arma falsificada"], "Art. 48 - Posesión de arma sin licencia", "17,000 MXN y 1 año de prisión."),
+    (["comercio ilegal de armas", "trafico de armas", "vender armas sin permiso", "comprar armas sin permiso"], "Art. 50 - Comercio ilegal de armas de fuego", "30,000 MXN y 2 años de prisión."),
+    (["intento de homicidio", "intento de asesinato", "intento de matar"], "Art. 51/52 - Intento de homicidio", "2 años de prisión (extremidades) / 1 año y medio (mano armada)."),
+    (["homicidio", "asesinato", "matar a alguien", "homicidio multiple", "masacre"], "Art. 54 - Homicidio", "3 años de prisión (2 años y medio si es con extremidades)."),
+    (["secuestro", "secuestrar", "privacion ilegal de la libertad", "privacion de libertad", "raptar", "rapto"], "Art. 56 - Secuestro", "3 años de prisión."),
+    (["extorsion", "extorsionar", "chantaje", "chantajear"], "Art. 57 - Extorsión", "10,000 MXN y 2 años de prisión."),
+    (["amenaza", "amenazar", "amenazas"], "Art. 58 - Amenazas", "7,000 MXN y 1 año de prisión."),
+    (["falsedad documental", "documento falso", "falsificar documento", "documentos falsos"], "Art. 59 - Falsedad documental", "70,000 a 100,000 MXN y 2 años de prisión."),
+    (["sin identificacion", "sin papeles", "indebida documentacion", "sin documentos del auto"], "Art. 60 - Indebida documentación", "10,000 MXN (+20,000 MXN y retiro si es auto)."),
+    (["estafa", "estafar", "fraude", "enganar con lucro"], "Art. 61 - Estafa", "12,000 MXN e indemnización de daños."),
+    (["desobedecer orden", "desobediencia a la autoridad", "incumplir resolucion judicial"], "Art. 62 - Desobedecer orden de autoridad", "20,000 MXN (48,000 MXN y 6 meses si es resolución judicial)."),
+    (["reporte falso", "llamada falsa a emergencias"], "Art. 63 - Reporte falso a servicios de emergencia", "27,000 MXN y 4 meses de prisión temporal."),
+    (["zona restringida", "instalaciones restringidas", "invadir base militar"], "Art. 64 - Invadir instalaciones restringidas", "14,000 MXN y 2 días de detención temporal ERLC."),
+    (["robo de objeto del estado", "robar patrulla", "robar equipo del estado"], "Art. 65 - Robo de objeto perteneciente al Estado", "50,000 MXN y 2 años de prisión."),
+    (["suplantar funcionario", "suplantar autoridad", "falso policia", "falso militar"], "Art. 66 - Suplantación de identidad de miembro del Estado", "10,000 MXN extra a falsificación y 2 años de prisión."),
+    (["resistencia a la autoridad", "resistirse al arresto", "impedir detencion"], "Art. 67 - Resistencia a la autoridad", "14,000 MXN."),
+    (VARIANTES_EVASION, "Art. 68 - Evasión a la autoridad", "9,600 MXN y 1 mes de prisión."),
+    (["soborno", "sobornar", "ofrecer dinero a funcionario"], "Art. 69 - Soborno", "37,000 MXN y 3 años de prisión."),
+    (["terrorismo", "atentado terrorista", "poner una bomba"], "Art. 70 - Terrorismo", "500,000 MXN y 15 años de prisión."),
+    (["atentar contra funcionario", "herir a un policia", "disparar a un policia", "robar equipo policial"], "Art. 71 - Atentar contra integridad de funcionario público o robar equipo", "2 años de prisión."),
+    (["resolucion arbitraria", "prevaricacion"], "Art. 72 - Dictar resolución arbitraria", "Inhabilitación permanente de cargo público."),
     (["nombramiento ilegal"], "Art. 73 - Nombramiento ilegal a cargo público", "200,000 MXN e inhabilitación permanente."),
-    (["abandono de misión", "abandonar servicio"], "Art. 74 - Abandono de misión para no perseguir delitos", "Inhabilitación de cargo y empleo."),
-    (["calumnia", "injuria al estado"], "Art. 76 - Calumniar o injuriar institución del Estado", "300,000 MXN y disculpa pública."),
-    (["ocultar documentos", "destruir documentos"], "Art. 79 - Sustraer, destruir u ocultar documentos bajo custodia", "50,000 MXN e inhabilitación."),
+    (["abandono de mision", "abandonar el servicio"], "Art. 74 - Abandono de misión para no perseguir delitos", "Inhabilitación de cargo y empleo."),
+    (["calumnia a institucion", "injuria a institucion"], "Art. 76 - Calumniar o injuriar institución del Estado", "300,000 MXN y disculpa pública."),
+    (["ocultar documentos bajo custodia", "destruir documentos bajo custodia"], "Art. 79 - Sustraer, destruir u ocultar documentos bajo custodia", "50,000 MXN e inhabilitación."),
     (["cadena de custodia", "contaminar evidencia"], "Art. 80 - Contaminar u obstruir cadena de custodia", "155,000 MXN e inhabilitación."),
-    (["revelación de secretos", "filtrar información"], "Art. 81 - Revelación de secretos oficiales", "380,000 MXN e inhabilitación."),
-    (["cohecho", "pedir mordida", "dádiva"], "Art. 82/83 - Cohecho", "250,000 MXN, 3 años de prisión e inhabilitación."),
-    (["regalo", "ofrenda por cargo"], "Art. 84 - Recibir regalo en consideración a su cargo", "150,000 MXN."),
-    (["tráfico de influencias"], "Art. 86 - Tráfico de influencias", "360,000 MXN, 1 año de prisión e inhabilitación."),
-    (["malversación", "desviar fondos", "robar dinero público"], "Art. 87 - Malversación", "350,000 MXN y 4 años de prisión."),
-    (["contratación pública"], "Art. 88 - Concertación ilegal en contratación pública", "Sanción por concierto ilegal con ánimo de lucro.")
+    (["revelacion de secretos", "filtrar informacion reservada"], "Art. 81 - Revelación de secretos oficiales", "380,000 MXN e inhabilitación."),
+    (["cohecho", "pedir mordida", "pedir dadiva"], "Art. 82/83 - Cohecho", "250,000 MXN, 3 años de prisión e inhabilitación."),
+    (["regalo por el cargo", "ofrenda por el cargo"], "Art. 84 - Recibir regalo en consideración a su cargo", "150,000 MXN."),
+    (["trafico de influencias"], "Art. 86 - Tráfico de influencias", "360,000 MXN, 1 año de prisión e inhabilitación."),
+    (["malversacion", "desviar fondos publicos", "robar dinero publico"], "Art. 87 - Malversación", "350,000 MXN y 4 años de prisión."),
+    (["concertacion ilegal en contratacion publica"], "Art. 88 - Concertación ilegal en contratación pública", "Sanción por concierto ilegal con ánimo de lucro.")
 ]
 
 def motor_local_rapido(situacion):
-    s = situacion.lower()
+    s = normalizar_texto(situacion)
     articulos = []
 
     for palabras_clave, titulo, sancion in REGLAS_LOCALES:
-        if any(k in s for k in palabras_clave):
-            if titulo.startswith("Art. 54") and "intento de homicidio" in s and s.count("homicidio") == 1:
+        for k in palabras_clave:
+            k_norm = normalizar_texto(k)
+            if not k_norm:
                 continue
-            articulos.append((titulo, sancion))
+            # Coincidencia por palabra/frase completa para no invadir otros artículos
+            patron = r"(?:^|\s)" + re.escape(k_norm) + r"(?:$|\s)"
+            if re.search(patron, s):
+                if titulo.startswith("Art. 54") and "intento de homicidio" in s and s.count("homicidio") == 1:
+                    continue
+                articulos.append((titulo, sancion))
+                break
 
     if not articulos:
         articulos.append(("Art. 1 - Disposición General del Código Penal", "Sujeto a revisión de los hechos por la autoridad competente."))
@@ -290,13 +374,13 @@ def obtener_respuesta_ia(situacion):
                 {"role": "user", "content": f'SITUACIÓN: "{situacion}"'}
             ],
             temperature=0.0,
-            max_tokens=4096,
+            max_tokens=2048,
         )
         res = completion.choices[0].message.content
         if res and res.strip():
             return res
     except Exception as e:
-        print(f"Aviso IA: {e}")
+        print(f"ERROR GROQ: {e}")
 
     return motor_local_rapido(situacion)
 
