@@ -157,6 +157,8 @@ CODIGO_PENAL_TEXTO = "\n".join([
     "Art. 88: Concertación ilegal en contratación pública con ánimo de lucro."
 ])
 
+MENSAJE_NO_VALIDO = "⚠️ Te has equivocado de mensaje o esa situación no existe en el Código Penal. Describe un delito o infracción válida."
+
 def normalizar_texto(texto: str) -> str:
     if not texto:
         return ""
@@ -170,7 +172,7 @@ def generar_variantes_evasion() -> list[str]:
         "huir", "huida", "huyendo", "huido", "huirse", "me fui huyendo", "salir huyendo",
         "escapar", "escaparse", "escapando", "escapado", "escape", "me escape", "salir corriendo",
         "evadir", "evadirse", "evadiendo", "evadido", "evasion",
-        "fugarse", "fuga", "fugando", "fugado",
+        "fugarse", "fuga", "fugando", "fugado", "fuega", "fuegarse", "fuegando",
         "correr", "corriendo", "pelarse", "pelarme", "abrirse", "abrirme",
         "darse a la fuga", "darme a la fuga", "salir por piernas", "tirarse a la fuga",
         "zafarse", "zafarme", "esquivar", "esquivando", "esquive",
@@ -203,17 +205,15 @@ def generar_variantes_evasion() -> list[str]:
     for v, c, o in itertools.product(verbos, conectores, objetivos):
         variantes.add(f"{v} {c} {o}")
 
-    # Variantes directas sin conector o con frases habituales
     directas = [
         "huir de lo polis", "huir de lo policiaas", "escapar de los elementos",
         "escapar de lo elementos", "escapar de la policia", "escapar de las policias",
         "huir de la policia", "huir de las policias", "huir de los polis",
         "escapar de los polis", "escapar de lo polis", "escapar de policiaas",
         "huir de policiaas", "huir de los elementos", "huir de lo elementos",
-        "escapar de los polis", "escapar de los elementos", "escapar de la autoridad",
-        "evadir a la policia", "evadir a los polis", "evadir a los elementos",
-        "evadir a lo polis", "evadir a lo elementos", "evadir el arresto",
-        "evitar el arresto", "evitar arresto", "evitar la detencion",
+        "escapar de la autoridad", "evadir a la policia", "evadir a los polis",
+        "evadir a los elementos", "evadir a lo polis", "evadir a lo elementos",
+        "evadir el arresto", "evitar el arresto", "evitar arresto", "evitar la detencion",
         "darse a la fuga", "salir huyendo de la policia", "salir huyendo de los polis",
         "salir huyendo de los elementos", "escapar corriendo de la policia",
         "escapar corriendo de los polis", "escapar corriendo de los elementos",
@@ -222,7 +222,8 @@ def generar_variantes_evasion() -> list[str]:
         "me fui huyendo de los elementos", "huida de la policia", "huida de los polis",
         "huida de los elementos", "fuga de la policia", "fuga de los polis",
         "fuga de los elementos", "escapar de reten", "huir de reten",
-        "escapar de un control", "huir de un control", "escapar del reten"
+        "escapar de un control", "huir de un control", "escapar del reten",
+        "fuega ire escapar de la policia", "fuega irme escapar de la policia"
     ]
     for d in directas:
         variantes.add(normalizar_texto(d))
@@ -234,7 +235,6 @@ VARIANTES_EVASION = generar_variantes_evasion()
 # ==========================================
 # 3. MOTOR LOCAL DE RESPALDO INFALIBLE
 # ==========================================
-# Reglas específicas y de varias palabras para no invadir otros artículos
 REGLAS_LOCALES = [
     (["atenuante", "confesar", "cooperar", "complice"], "Art. 1.3 - Circunstancias atenuantes", "Disminución de gravedad/pena según criterio judicial."),
     (["agravante", "reincidente", "insultar", "discriminar"], "Art. 2 - Circunstancias agravantes", "+11 meses de prisión federal o 5,000 MXN."),
@@ -315,6 +315,9 @@ REGLAS_LOCALES = [
 
 def motor_local_rapido(situacion):
     s = normalizar_texto(situacion)
+    if not s or len(s.strip()) < 3:
+        return MENSAJE_NO_VALIDO
+
     articulos = []
 
     for palabras_clave, titulo, sancion in REGLAS_LOCALES:
@@ -322,7 +325,6 @@ def motor_local_rapido(situacion):
             k_norm = normalizar_texto(k)
             if not k_norm:
                 continue
-            # Coincidencia por palabra/frase completa para no invadir otros artículos
             patron = r"(?:^|\s)" + re.escape(k_norm) + r"(?:$|\s)"
             if re.search(patron, s):
                 if titulo.startswith("Art. 54") and "intento de homicidio" in s and s.count("homicidio") == 1:
@@ -331,7 +333,7 @@ def motor_local_rapido(situacion):
                 break
 
     if not articulos:
-        articulos.append(("Art. 1 - Disposición General del Código Penal", "Sujeto a revisión de los hechos por la autoridad competente."))
+        return MENSAJE_NO_VALIDO
 
     vistos = set()
     articulos_unicos = []
@@ -347,38 +349,47 @@ def motor_local_rapido(situacion):
 
 def obtener_respuesta_ia(situacion):
     if not situacion or len(situacion.strip()) < 3:
-        return motor_local_rapido(situacion)
+        return MENSAJE_NO_VALIDO
 
     if not groq_client:
         return motor_local_rapido(situacion)
 
     system_prompt = (
-        "Eres un asistente legal experto del Código Penal Federal de México. "
-        "Analiza la situación palabra por palabra y extrae TODOS los artículos aplicables sin omitir ninguno. "
-        "Distingue cuidadosamente entre intento de homicidio (Art. 51/52) y homicidio consumado (Art. 53/54), "
-        "y entre conducir sin licencia (Art. 11) y posesión de arma sin licencia (Art. 48).\n\n"
+        "Eres un juez y experto legal del Código Penal Federal para un servidor de roleplay.\n"
+        "REGLAS ESTRICTAS:\n"
+        "1. Primero evalúa si el mensaje del usuario describe un delito, infracción, situación jurídica o consulta sobre un artículo del Código Penal.\n"
+        "2. Si el mensaje NO tiene sentido legal, es una pregunta cotidiana o fuera de tema (por ejemplo: '¿cuál es el tiempo de hoy?', 'hola', 'qué tal', 'cuánto es 2+2', bromas sin delito o texto incoherente), responde ÚNICAMENTE con esta frase exacta:\n"
+        f"{MENSAJE_NO_VALIDO}\n"
+        "3. Si SÍ describe una situación o delito, interpreta su intención real aunque tenga faltas graves de ortografía, abreviaturas o jerga (ej. 'polis', 'elementos', 'fuega', 'fierro', 'plomear', 'darse a la fuga') y extrae TODOS los artículos aplicables sin omitir ninguno.\n"
+        "4. Distingue bien:\n"
+        "   - Huir o escapar de policías/elementos/autoridad = Art. 68 (Evasión a la autoridad).\n"
+        "   - Huir de un accidente sin ayudar = Art. 25.\n"
+        "   - Evadir un retén o control de tráfico = Art. 21.\n"
+        "   - Intento de homicidio (queda vivo/crítico) = Art. 51 o 52 / Homicidio (fallece) = Art. 53 o 54.\n"
+        "   - Conducir sin licencia = Art. 11 / Arma sin licencia = Art. 48.\n"
+        "5. NUNCA uses el Art. 1 como relleno o respuesta por defecto.\n\n"
         f"{CODIGO_PENAL_TEXTO}\n\n"
-        "FORMATO OBLIGATORIO:\n"
+        "FORMATO OBLIGATORIO CUANDO SÍ HAY DELITO:\n"
         "**Artículos aplicables:**\n"
         "• Art. XX - Nombre del delito\n\n"
         "**Conclusión:**\n"
         "Sanciones correspondientes aplicadas:\n"
-        "• Art. XX - Nombre del delito: [Multa y Prisión]"
+        "• Art. XX - Nombre del delito: [Multa y/o Prisión]"
     )
 
     try:
         completion = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f'SITUACIÓN: "{situacion}"'}
+                {"role": "user", "content": f'SITUACIÓN A ANALIZAR: "{situacion}"'}
             ],
-            temperature=0.0,
-            max_tokens=2048,
+            temperature=0.1,
+            max_tokens=1024,
         )
         res = completion.choices[0].message.content
         if res and res.strip():
-            return res
+            return res.strip()
     except Exception as e:
         print(f"ERROR GROQ: {e}")
 
