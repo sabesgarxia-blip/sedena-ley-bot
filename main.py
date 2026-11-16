@@ -47,114 +47,112 @@ CODIGO_PENAL_TEXTO = "\n".join([
     "CÓDIGO PENAL FEDERAL",
     "",
     "Título I - De los delitos",
-    "Art 1: Este Código penal aplicará en toda la República Mexicana para los delitos de Fuero Común y Federal.",
-    "Fracción I: Es delito toda acción u omisión voluntaria penada por la ley, el que cometiere delito será responsable de él e incurrirá en la pena que la ley señale.",
-    "Art. 1.1: Todo aquel abogado que tenga conocimiento del presunto delito que le confiere a su cliente, en el desempeño de sus servicios jurídicos-legal, no tiene ninguna obligación legal de denunciar el delito al que se le profiere a su cliente.",
-    "Fracción I: Todo aquel que cumpla el artículo 2 estará exento de responsabilidad criminal, procesal, condenatoria o cualesquiera que dañen la inocencia y el trabajo del abogado.",
-    "Art. 1.2: La ley penal mexicana es obligatoria para todos los habitantes de la República, incluso los extranjeros. Los delitos cometidos dentro del mar territorial o adyacente quedan sometidos a las prescripciones de la Suprema Corte Suprema de México.",
-    "Art. 1.3: Son circunstancias atenuantes las situaciones que disminuyen la gravedad o la intensidad de un delito: obedece indicaciones de funcionario sin oposición, reparar el daño físico o psicológico, ser cómplice, confesar ante autoridad, o sufrir discapacidad/trastorno mental demostrable.",
-    "Art. 2: Son circunstancias agravantes las situaciones que aumentan la gravedad o la intensidad de un delito. Se aplicarán 11 meses al total de la condena si hay prisión federal, y en caso de que no la hubiera, 5,000 MXN. Agravantes: insultar repetidamente a un funcionario en ejercicio, reincidencia, o discriminar por color de piel, procedencia, sexo, identidad u orientación sexual.",
-    "Art. 3: Los períodos de cárcel se regirán en base a los siguientes plazos: 24 meses = 1 día y 12 horas; 18 meses = 1 día y 6 horas; 12 meses = 22 horas; 9 meses = 12 horas y 30 minutos; 6 meses = 9 horas; 3 meses = 5 horas y 30 minutos; 1 mes = 2 horas y 30 minutos.",
+    "Art 1: Disposición General del Código Penal (aplicable en toda la República Mexicana para delitos de Fuero Común y Federal; es delito toda acción u omisión voluntaria penada por la ley).",
+    "Art 1.1: Secreto profesional del abogado (sin obligación de denunciar el presunto delito conferido por su cliente en servicios jurídico-legales).",
+    "Art 1.2: Obligatoriedad territorial y mar territorial (obligatoria para todos los habitantes de la República, incluidos extranjeros).",
+    "Art 1.3: Circunstancias atenuantes (obedecer indicaciones de funcionario sin oposición, reparar daño, ser cómplice, confesar, o discapacidad/trastorno mental demostrable).",
+    "Art 2: Circunstancias agravantes (+11 meses de prisión federal o 5,000 MXN; insultar repetidamente a funcionario, reincidencia, o discriminación).",
+    "Art 3: Equivalencia de plazos de cárcel (24 meses = 1 día 12h; 18 meses = 1 día 6h; 12 meses = 22h; 9 meses = 12h 30m; 6 meses = 9h; 3 meses = 5h 30m; 1 mes = 2h 30m).",
     "",
     "Título II - De las leyes de circulación",
-    "Art. 4: Conducción temeraria que pone en peligro la vida de viandantes o la vía/funcionario: sanción de 2,000 MXN y/o pérdida de 3 puntos.",
-    "Art. 4.1: Licencias de conducción con puntaje máximo de 10. Al llegar a 0 puntos se retira la licencia de 6 a 12 meses. Se recuperan conduciendo bien (ej. 7 días = 2 puntos, respetar semáforos = 1 punto; al suspender se reinician a 10).",
-    "Art. 5: Daño a propiedad privada o pública con vehículo: 2,500 MXN y reparación total. La conciliación extingue el delito.",
-    "Art. 6: No cumplir semáforos: 500 MXN por cada semáforo ignorado.",
-    "Art. 7: Conducir en dirección contraria: 3,000 MXN y/o pérdida de 1 punto.",
-    "Art. 8: Conducir bajo efectos de alcohol o sustancias ilegales (incluye estar en el interior del vehículo con pruebas): 2,500 MXN y/o pérdida de 6 puntos.",
-    "Art. 9: Posesión de arma no autorizada en vehículo: Art. 48 + 4,000 MXN e incautación temporal del vehículo (retirable solo por juez).",
-    "Art. 10: Incumplir límites de velocidad: 1,500 MXN y retirada de 2 puntos.",
-    "Art. 11: Conducir sin licencia: 4,000 MXN e ingreso a prisión preventiva de 24h.",
-    "Art. 12: Carreras clandestinas sin permiso: 6,500 MXN, suspensión de licencia y 1 mes de prisión.",
-    "Art. 13: Mal estacionado en zona prohibida: 750 MXN o traslado al depósito (1,000 MXN extra por grúa).",
-    "Art. 14: Estacionado obstruyendo la circulación vial: 1,800 MXN o depósito (2,000 MXN por grúa).",
-    "Art. 15: No ceder el paso a servicios de emergencia: 1,500 MXN y retirada de licencia por 1 mes.",
-    "Art. 16: Uso de luces obligatorio entre ocaso y amanecer: 500 MXN.",
-    "Art. 17: Vehículo con faltas técnicas y/o mecánicas: 900 MXN y retirada de 2 puntos.",
-    "Art. 18: Arrojar objetos a la vía o inmediaciones: 500 MXN.",
-    "Art. 19: Incumplimiento general de normas de tráfico: 500 MXN y retirada de 1 punto.",
-    "Art. 20: Adelantamientos erróneos o peligrosos (en curva, línea continua, paso a nivel/peatonal): 1,200 MXN y retirada de 2 puntos.",
-    "Art. 21: Ignorar a agente regulando tráfico, evadir control policial/militar o ignorar escolta en convoy: 2,150 MXN y retirada de 2 puntos.",
-    "Art. 22: Uso de móvil, navegador o auriculares conduciendo sin estar estacionado: 400 MXN y retirada de 1 punto.",
-    "Art. 23: Circular por fuera de la calzada (aceras, césped, arcenes): 850 MXN y retirada de 2 puntos.",
-    "Art. 24: Uso indebido de elementos acústicos (claxon) en la vía pública: 380 MXN.",
-    "Art. 25: Huir de un accidente sin identificar o socorrer heridos: 4,700 MXN y disposición ante el ministerio público. Exento si no hubo mala voluntad y se avisó a emergencias.",
-    "Art. 26: Causar accidente mayor: 8,000 MXN y retirada de licencia (determinado por juez). Víctimas justificadas quedan exentas.",
-    "Art. 27: Circular sin matrícula o con matrícula ilegible: 4,000 MXN y depósito (1,000 MXN de grúa).",
-    "Art. 28: Cruzar la calle indebidamente o pararse en el centro por un civil: 600 MXN. (Exentos servicios de emergencia).",
+    "Art 4: Conducción temeraria (2,000 MXN y/o pérdida de 3 puntos).",
+    "Art 4.1: Sistema de puntaje de licencia (máximo 10 puntos; a 0 puntos retirada de 6 a 12 meses).",
+    "Art 5: Daño a propiedad privada o pública con vehículo (2,500 MXN y reparación total).",
+    "Art 6: No cumplir semáforos (500 MXN por cada semáforo ignorado).",
+    "Art 7: Conducir en dirección contraria (3,000 MXN y/o pérdida de 1 punto).",
+    "Art 8: Conducir bajo efectos de alcohol o sustancias ilegales (2,500 MXN y/o pérdida de 6 puntos).",
+    "Art 9: Posesión de arma no autorizada en vehículo (Art. 48 + 4,000 MXN e incautación temporal del vehículo).",
+    "Art 10: Incumplir límites de velocidad (1,500 MXN y retirada de 2 puntos).",
+    "Art 11: Conducir sin licencia (4,000 MXN e ingreso a prisión preventiva de 24h).",
+    "Art 12: Carreras clandestinas sin permiso (6,500 MXN, suspensión de licencia y 1 mes de prisión).",
+    "Art 13: Mal estacionado en zona prohibida (750 MXN o depósito; 1,000 MXN extra por grúa).",
+    "Art 14: Estacionado obstruyendo la circulación vial (1,800 MXN o depósito; 2,000 MXN por grúa).",
+    "Art 15: No ceder el paso a servicios de emergencia (1,500 MXN y retirada de licencia por 1 mes).",
+    "Art 16: Uso de luces obligatorio entre ocaso y amanecer (500 MXN).",
+    "Art 17: Vehículo con faltas técnicas y/o mecánicas (900 MXN y retirada de 2 puntos).",
+    "Art 18: Arrojar objetos a la vía o inmediaciones (500 MXN).",
+    "Art 19: Incumplimiento general de normas de tráfico (500 MXN y retirada de 1 punto).",
+    "Art 20: Adelantamientos erróneos o peligrosos (1,200 MXN y retirada de 2 puntos).",
+    "Art 21: Ignorar a agente regulando tráfico, evadir control policial/militar o ignorar escolta (2,150 MXN y retirada de 2 puntos).",
+    "Art 22: Uso de móvil, navegador o auriculares conduciendo sin estar estacionado (400 MXN y retirada de 1 punto).",
+    "Art 23: Circular por fuera de la calzada (850 MXN y retirada de 2 puntos).",
+    "Art 24: Uso indebido de elementos acústicos / claxon (380 MXN).",
+    "Art 25: Huir de un accidente sin identificar o socorrer heridos (4,700 MXN y disposición ante el ministerio público).",
+    "Art 26: Causar accidente mayor (8,000 MXN y retirada de licencia).",
+    "Art 27: Circular sin matrícula o con matrícula ilegible (4,000 MXN y depósito; 1,000 MXN de grúa).",
+    "Art 28: Cruzar la calle indebidamente o pararse en el centro por un civil (600 MXN).",
     "",
     "Título II (Sección 2) - De las agresiones, los disturbios y las conductas erróneas",
-    "Art. 29: Conflicto con agresión física o daños materiales: 2,500 MXN e ingreso inmediato en prisión temporal. Heridos bajo custodia en hospital.",
-    "Art. 30: Agresión verbal (2,000 MXN) / Agresión física (2 años de prisión e indemnización médica de 2,000 a 6,000 MXN).",
-    "Art. 31: Funcionario que no lee derechos al detener: suspensión de 1 año y 5,000 MXN. Incumplimiento de habeas corpus: 8,000 a 12,000 MXN.",
-    "Art. 32: Alterar el orden público con actitudes o palabras: 1 mes de prisión.",
-    "Art. 33: Comercialización de productos no autorizados: 2,000 MXN y confiscación.",
-    "Art. 34: Inducción a la alteración pública: 5,000 MXN y 6 meses de prisión.",
-    "Art. 35: Inducir a realizar acciones ilegales ajenas a la voluntad: 2 años de prisión.",
-    "Art. 36: Pertenecer a grupo criminal: 2 años de prisión. Trabajar o incentivar al grupo: 1 año de prisión.",
-    "Art. 37: Agresión por color de piel, etnia o nacionalidad: multa/sanción de 2 años e indemnización psicológica de 15,000 MXN.",
-    "Art. 38: Suplantación de identidad: 12,000 MXN y 1 año y 6 meses de prisión (agravante 50% extra si es a autoridad pública).",
-    "Art. 39: Acoso reiterado con daños psicológicos (constatados por informe médico): 6,000 MXN y 1 año de prisión.",
-    "Art. 40: Menoscabo psíquico o lesión leve a cónyuge, expareja o persona vulnerable conviviente: 5,000 MXN y 2 años de prisión.",
+    "Art 29: Conflicto con agresión física o daños materiales (2,500 MXN e ingreso inmediato en prisión temporal).",
+    "Art 30: Agresión verbal o física (verbal: 2,000 MXN; física: 2 años de prisión e indemnización de 2,000 a 6,000 MXN).",
+    "Art 31: Funcionario que no lee derechos al detener (suspensión de 1 año y 5,000 MXN; habeas corpus: 8,000 a 12,000 MXN).",
+    "Art 32: Alterar el orden público con actitudes o palabras (1 mes de prisión).",
+    "Art 33: Comercialización de productos no autorizados (2,000 MXN y confiscación).",
+    "Art 34: Inducción a la alteración pública (5,000 MXN y 6 meses de prisión).",
+    "Art 35: Inducir a realizar acciones ilegales ajenas a la voluntad (2 años de prisión).",
+    "Art 36: Pertenecer a grupo criminal (2 años de prisión; trabajar o incentivar: 1 año de prisión).",
+    "Art 37: Agresión por color de piel, etnia o nacionalidad (sanción de 2 años e indemnización de 15,000 MXN).",
+    "Art 38: Suplantación de identidad (12,000 MXN y 1 año y 6 meses de prisión).",
+    "Art 39: Acoso reiterado con daños psicológicos (6,000 MXN y 1 año de prisión).",
+    "Art 40: Menoscabo psíquico o lesión leve a cónyuge, expareja o persona vulnerable conviviente (5,000 MXN y 2 años de prisión).",
     "",
     "Título III - De los hurtos y los asaltos",
-    "Art. 41: Allanamiento de morada (invasión de propiedad privada sin consentimiento): 7,000 MXN y 6 meses de prisión temporal. (Requiere orden escrita y sellada de juez de la Suprema Corte para policías/militares).",
-    "Art. 42: Usurpación (apoderarse violentamente de un inmueble o derecho): 20,000 MXN y 2 años de prisión.",
-    "Art. 43: Hurto (apropiación no violenta de posesiones ajenas): 15,000 MXN y 1 año de prisión.",
-    "Art. 44: Asalto con arma blanca: 10,000 MXN y 1 año y 6 meses de prisión.",
-    "Art. 45: Asalto con arma de fuego (robo agravado): 20,000 MXN y 2 años de prisión.",
-    "Art. 46: Apropiación con fuerza o intimidación con daños físicos/mentales/materiales: 16,000 MXN y 2 años de prisión.",
-    "Art. 47: Daños a propiedades del Estado: 25,000 MXN e indemnización obligatoria por especialista.",
+    "Art 41: Allanamiento de morada (7,000 MXN y 6 meses de prisión temporal).",
+    "Art 42: Usurpación (20,000 MXN y 2 años de prisión).",
+    "Art 43: Hurto (15,000 MXN y 1 año de prisión).",
+    "Art 44: Asalto con arma blanca (10,000 MXN y 1 año y 6 meses de prisión).",
+    "Art 45: Asalto con arma de fuego / robo agravado (20,000 MXN y 2 años de prisión).",
+    "Art 46: Apropiación con fuerza o intimidación con daños (16,000 MXN y 2 años de prisión).",
+    "Art 47: Daños a propiedades del Estado (25,000 MXN e indemnización obligatoria).",
     "",
     "Título IV - De las armas de fuego y su porte",
-    "Art. 48: Posesión de una o más armas sin licencia o falsificada: 17,000 MXN y 1 año de prisión.",
-    "Art. 49: Utilizar armas sin licencia con motivo justificado: 25,000 MXN y 1 año y medio de prisión. (Exenta legítima defensa probada y funcionarios autorizados).",
-    "Art. 50: Comercio ilegal de armas de fuego: 30,000 MXN y 2 años de prisión (sanciona a compradores y vendedores sin permiso).",
+    "Art 48: Posesión de una o más armas sin licencia o falsificada (17,000 MXN y 1 año de prisión).",
+    "Art 49: Utilizar armas sin licencia con motivo justificado (25,000 MXN y 1 año y medio de prisión).",
+    "Art 50: Comercio ilegal de armas de fuego (30,000 MXN y 2 años de prisión).",
     "",
     "Título V - De los homicidios, secuestros y extorsiones",
-    "Art. 51: Intento de homicidio con extremidades (víctima en estado crítico pero viva): 2 años de prisión. (Exenta legítima defensa).",
-    "Art. 52: Intento de homicidio a mano armada (arma blanca o fuego, víctima crítica viva): 1 año y medio de prisión. (Exenta legítima defensa).",
-    "Art. 53: Homicidio con extremidades (víctima fallece): 2 años y medio de prisión. (Exenta legítima defensa).",
-    "Art. 54: Homicidio con arma blanca o de fuego (víctima fallece): 3 años de prisión. (Exenta legítima defensa).",
-    "Art. 55: Homicidio múltiple (a más de una persona en corto tiempo): 5 años de prisión o 3 años extra por cada víctima adicional (juicio especial).",
-    "Art. 56: Secuestro (privación ilegal de la libertad): 3 años de prisión. Agravante: amenazas, armas, daños. Atenuante: liberación sin daños y sin rescate.",
-    "Art. 57: Extorsión (obtener algo mediante violencia o intimidación): 10,000 MXN y 2 años de prisión.",
-    "Art. 58: Amenazas (mal en persona, bienes u honor, o impedir derecho): 7,000 MXN y 1 año de prisión. Ayudantes: 5,000 MXN y 12 meses.",
+    "Art 51: Intento de homicidio con extremidades (2 años de prisión).",
+    "Art 52: Intento de homicidio a mano armada (1 año y medio de prisión).",
+    "Art 53: Homicidio con extremidades (2 años y medio de prisión).",
+    "Art 54: Homicidio con arma blanca o de fuego (3 años de prisión).",
+    "Art 55: Homicidio múltiple (5 años de prisión o 3 años extra por víctima adicional).",
+    "Art 56: Secuestro (3 años de prisión).",
+    "Art 57: Extorsión (10,000 MXN y 2 años de prisión).",
+    "Art 58: Amenazas (7,000 MXN y 1 año de prisión; ayudantes: 5,000 MXN y 12 meses).",
     "",
     "Título VI - De los delitos de documentos y licencias",
-    "Art. 59: Falsedad documental (crear, vender o usar documentos falsos): 70,000 a 100,000 MXN y 2 años de prisión. (Agravante si es oficial del gobierno/tribunal/policía; atenuante aceptar y entregar documento).",
-    "Art. 60: Indebida documentación (transitar sin identificación oficial: 10,000 MXN; conducir sin papeles del auto: 10,000 MXN + retiro de auto y multa de 20,000 MXN; cazar sin licencia de armas: 10,000 MXN).",
-    "Art. 61: Estafa (engaño con ánimo de lucro para perjuicio ajeno): 12,000 MXN e indemnización de daños.",
+    "Art 59: Falsedad documental (70,000 a 100,000 MXN y 2 años de prisión).",
+    "Art 60: Indebida documentación (10,000 MXN; auto sin papeles: 10,000 MXN + retiro y 20,000 MXN).",
+    "Art 61: Estafa (12,000 MXN e indemnización de daños).",
     "",
     "Título VII - De los delitos contra el Estado",
-    "Art. 62: Desobedecer orden de autoridad judicial/policial/militar: 20,000 MXN. Incumplir resolución judicial: 48,000 MXN y 6 meses de prisión.",
-    "Art. 63: Reporte falso a servicios de emergencia: 27,000 MXN y 4 meses de prisión temporal.",
-    "Art. 64: Invadir instalaciones catalogadas como restringidas: 14,000 MXN y 2 días de detención temporal ERLC.",
-    "Art. 65: Robo de objeto perteneciente al Estado: 50,000 MXN y 2 años de prisión.",
-    "Art. 66: Suplantación de identidad de miembro del Estado: 10,000 MXN extra a falsificación y 2 años de prisión. (Agravante alto funcionario/Gobierno).",
-    "Art. 67: Resistencia a la autoridad (impedir detención por fuerza/amenazas/acoso): 14,000 MXN.",
-    "Art. 68: Evasión a la autoridad (evitar arresto): 9,600 MXN y 1 mes de prisión.",
-    "Art. 69: Soborno (incentivar a funcionario público para beneficio propio): 37,000 MXN y 3 años de prisión.",
-    "Art. 70: Terrorismo (actos contra ciudadanía/Estado para inestabilidad nacional): 500,000 MXN y 15 años de prisión (juicio en Tribunal Federal).",
-    "Art. 71: Atentar contra integridad de funcionario público o robar equipo policial/militar: 2 años de prisión.",
-    "Art. 72: Funcionario que dicta resolución arbitraria a sabiendas: inhabilitación permanente de cargo público.",
-    "Art. 73: Funcionario que nombra ilegalmente a un cargo público: 200,000 MXN e inhabilitación permanente (igual sanción para quien acepta sabiendo que no cumple requisitos).",
-    "Art. 74: Funcionario que abandona su misión para no perseguir delitos: inhabilitación de cargo y empleo.",
-    "Art. 75: Funcionario que intencionadamente deja de promover la persecución de delitos: inhabilitación permanente.",
-    "Art. 76: Funcionario que calumnie o injurie a una institución del Estado públicamente: 300,000 MXN y disculpa pública.",
-    "Art. 77: Negativa abierta de funcionario a cumplir resoluciones judiciales: 230,000 MXN e inhabilitación. (Exento si el mandato es infracción manifiesta de ley).",
-    "Art. 78: Funcionario que no comparece ante la Suprema Corte u otra autoridad requerida: 90,000 MXN.",
-    "Art. 79: Funcionario que sustrae, destruye u oculta documentos bajo su custodia: 50,000 MXN e inhabilitación.",
-    "Art. 80: Contaminar u obstruir cadena de custodia de evidencia: 155,000 MXN e inhabilitación.",
-    "Art. 81: Funcionario que revela secretos o información reservada de su oficio: 380,000 MXN e inhabilitación.",
-    "Art. 82: Cohecho (solicitar dádiva/favor para acto contrario a deberes): 250,000 MXN, 3 años de prisión e inhabilitación.",
-    "Art. 83: Cohecho por acto propio del cargo: 190,000 MXN, 1 año de prisión e inhabilitación.",
-    "Art. 84: Recibir regalo u ofrenda en consideración a su cargo: 150,000 MXN.",
-    "Art. 85: Definición general de los artículos 82 a 83 como cohecho.",
-    "Art. 86: Tráfico de influencias (influir en otro funcionario para beneficio propio o ajeno): 360,000 MXN, 1 año de prisión e inhabilitación.",
-    "Art. 87: Malversación (sustraer o consentir sustracción de caudales públicos con ánimo de lucro): 350,000 MXN y 4 años de prisión.",
-    "Art. 88: Concertación ilegal en contratación pública con ánimo de lucro."
+    "Art 62: Desobedecer orden de autoridad (20,000 MXN; resolución judicial: 48,000 MXN y 6 meses de prisión).",
+    "Art 63: Reporte falso a servicios de emergencia (27,000 MXN y 4 meses de prisión temporal).",
+    "Art 64: Invadir instalaciones restringidas (14,000 MXN y 2 días de detención temporal ERLC).",
+    "Art 65: Robo de objeto perteneciente al Estado (50,000 MXN y 2 años de prisión).",
+    "Art 66: Suplantación de identidad de miembro del Estado (10,000 MXN extra a falsificación y 2 años de prisión).",
+    "Art 67: Resistencia a la autoridad (14,000 MXN).",
+    "Art 68: Evasión a la autoridad (9,600 MXN y 1 mes de prisión).",
+    "Art 69: Soborno (37,000 MXN y 3 años de prisión).",
+    "Art 70: Terrorismo (500,000 MXN y 15 años de prisión).",
+    "Art 71: Atentar contra integridad de funcionario público o robar equipo policial/militar (2 años de prisión).",
+    "Art 72: Funcionario que dicta resolución arbitraria a sabiendas (inhabilitación permanente de cargo público).",
+    "Art 73: Funcionario que nombra ilegalmente a un cargo público (200,000 MXN e inhabilitación permanente).",
+    "Art 74: Funcionario que abandona su misión para no perseguir delitos (inhabilitación de cargo y empleo).",
+    "Art 75: Funcionario que intencionadamente deja de promover la persecución de delitos (inhabilitación permanente).",
+    "Art 76: Funcionario que calumnie o injurie a una institución del Estado (300,000 MXN y disculpa pública).",
+    "Art 77: Negativa abierta de funcionario a cumplir resoluciones judiciales (230,000 MXN e inhabilitación).",
+    "Art 78: Funcionario que no comparece ante la Suprema Corte u otra autoridad requerida (90,000 MXN).",
+    "Art 79: Funcionario que sustrae, destruye u oculta documentos bajo su custodia (50,000 MXN e inhabilitación).",
+    "Art 80: Contaminar u obstruir cadena de custodia de evidencia (155,000 MXN e inhabilitación).",
+    "Art 81: Funcionario que revela secretos o información reservada de su oficio (380,000 MXN e inhabilitación).",
+    "Art 82: Cohecho (250,000 MXN, 3 años de prisión e inhabilitación).",
+    "Art 83: Cohecho por acto propio del cargo (190,000 MXN, 1 año de prisión e inhabilitación).",
+    "Art 84: Recibir regalo u ofrenda en consideración a su cargo (150,000 MXN).",
+    "Art 85: Definición general de los artículos 82 a 83 como cohecho.",
+    "Art 86: Tráfico de influencias (360,000 MXN, 1 año de prisión e inhabilitación).",
+    "Art 87: Malversación (350,000 MXN y 4 años de prisión).",
+    "Art 88: Concertación ilegal en contratación pública con ánimo de lucro."
 ])
 
 MENSAJE_NO_VALIDO = "⚠️ Te has equivocado de mensaje o esa situación no existe en el Código Penal. Describe un delito o infracción válida."
@@ -336,7 +334,25 @@ def motor_local_rapido(situacion):
                     encontrados.append(linea)
                     break
         if encontrados:
-            return "**Artículos aplicables:**\n• " + "\n• ".join(encontrados[:35])
+            lista_art = []
+            lista_conc = []
+            for linea in encontrados:
+                cuerpo = linea.split(":", 1)[1].strip() if ":" in linea else linea
+                if "(" in cuerpo and cuerpo.endswith(")"):
+                    nombre = cuerpo[:cuerpo.rfind("(")].strip()
+                    sancion = cuerpo[cuerpo.rfind("(")+1:-1].strip()
+                else:
+                    nombre = cuerpo
+                    sancion = "Sin sanción monetaria o de prisión especificada."
+                num_art = linea.split(":", 1)[0].strip()
+                lista_art.append(f"• {num_art} - {nombre}")
+                lista_conc.append(f"• {num_art} - {nombre}: {sancion}")
+            return (
+                "**Artículos aplicables:**\n"
+                + "\n".join(lista_art)
+                + "\n\n**Conclusión:**\nSanciones correspondientes aplicadas:\n"
+                + "\n".join(lista_conc)
+            )
 
     articulos = []
     for palabras_clave, titulo, sancion in REGLAS_LOCALES:
@@ -375,25 +391,28 @@ def obtener_respuesta_ia(situacion):
 
     system_prompt = (
         "Eres un juez y experto legal del Código Penal Federal para un servidor de roleplay.\n"
-        "REGLAS ESTRICTAS:\n"
-        "1. Si el mensaje es una lista de números de artículos (ej. 'Los artículos son 1, 2, 6...'), devuelve el resumen de esos artículos indicados.\n"
-        "2. Si el mensaje NO tiene sentido legal, es una pregunta cotidiana o fuera de tema (por ejemplo: '¿cuál es el tiempo de hoy?', 'hola', 'qué tal', 'cuánto es 2+2', bromas sin delito o texto incoherente), responde ÚNICAMENTE con esta frase exacta:\n"
+        "REGLAS ESTRICTAS DE FORMATO:\n"
+        "1. En la sección **Artículos aplicables:** escribe ÚNICAMENTE el número de artículo y su nombre corto (NUNCA pongas dinero, multas, puntos ni años de prisión ahí).\n"
+        "2. En la sección **Conclusión:** escribe las sanciones correspondientes aplicadas (multa en MXN, puntos, prisión o inhabilitación según el código).\n"
+        "3. Si el mensaje NO tiene sentido legal, es una pregunta cotidiana o fuera de tema (por ejemplo: '¿cuál es el tiempo de hoy?', 'hola', 'qué tal', 'cuánto es 2+2', bromas sin delito o texto incoherente), responde ÚNICAMENTE con esta frase exacta:\n"
         f"{MENSAJE_NO_VALIDO}\n"
-        "3. Si SÍ describe una situación o delito, interpreta su intención real aunque tenga faltas graves de ortografía, abreviaturas o jerga (ej. 'polis', 'elementos', 'fuega', 'fierro', 'plomear', 'darse a la fuga') y extrae TODOS los artículos aplicables sin omitir ninguno.\n"
-        "4. Distingue bien:\n"
+        "4. Si SÍ describe una situación o delito, interpreta su intención real aunque tenga faltas graves de ortografía, abreviaturas o jerga (ej. 'polis', 'elementos', 'fuega', 'fierro', 'plomear', 'darse a la fuga') y extrae TODOS los artículos aplicables sin omitir ninguno.\n"
+        "5. Distingue bien:\n"
         "   - Huir o escapar de policías/elementos/autoridad = Art. 68 (Evasión a la autoridad).\n"
         "   - Huir de un accidente sin ayudar = Art. 25.\n"
         "   - Evadir un retén o control de tráfico = Art. 21.\n"
         "   - Intento de homicidio (queda vivo/crítico) = Art. 51 o 52 / Homicidio (fallece) = Art. 53 o 54.\n"
         "   - Conducir sin licencia = Art. 11 / Arma sin licencia = Art. 48.\n"
-        "5. NUNCA uses el Art. 1 como relleno o respuesta por defecto.\n\n"
+        "6. NUNCA uses el Art. 1 como relleno o respuesta por defecto.\n\n"
         f"{CODIGO_PENAL_TEXTO}\n\n"
-        "FORMATO OBLIGATORIO CUANDO SÍ HAY DELITO:\n"
+        "EJEMPLO OBLIGATORIO DE ESTRUCTURA:\n"
         "**Artículos aplicables:**\n"
-        "• Art. XX - Nombre del delito\n\n"
+        "• Art. 6 - No cumplir semáforos\n"
+        "• Art. 68 - Evasión a la autoridad\n\n"
         "**Conclusión:**\n"
         "Sanciones correspondientes aplicadas:\n"
-        "• Art. XX - Nombre del delito: [Multa y/o Prisión]"
+        "• Art. 6 - No cumplir semáforos: 500 MXN por cada semáforo ignorado\n"
+        "• Art. 68 - Evasión a la autoridad: 9,600 MXN y 1 mes de prisión"
     )
 
     try:
@@ -404,7 +423,7 @@ def obtener_respuesta_ia(situacion):
                 {"role": "user", "content": f'SITUACIÓN A ANALIZAR: "{situacion}"'}
             ],
             temperature=0.1,
-            max_tokens=1024,
+            max_tokens=3500,
         )
         res = completion.choices[0].message.content
         if res and res.strip():
