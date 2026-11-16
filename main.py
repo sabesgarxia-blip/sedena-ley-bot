@@ -164,7 +164,7 @@ def normalizar_texto(texto: str) -> str:
         return ""
     nfkd = unicodedata.normalize("NFKD", texto.lower())
     sin_tildes = "".join(c for c in nfkd if not unicodedata.combining(c))
-    return re.sub(r"[^a-z0-9\s]", " ", sin_tildes)
+    return re.sub(r"[^a-z0-9\s\.]", " ", sin_tildes)
 
 def generar_variantes_evasion() -> list[str]:
     """Genera miles de combinaciones de huida/escape de policías, polis, elementos y autoridades."""
@@ -315,11 +315,30 @@ REGLAS_LOCALES = [
 
 def motor_local_rapido(situacion):
     s = normalizar_texto(situacion)
-    if not s or len(s.strip()) < 3:
+    if not s or len(s.strip()) < 2:
         return MENSAJE_NO_VALIDO
 
-    articulos = []
+    numeros_detectados = re.findall(r"\b\d+(?:\.\d+)?\b", s)
+    if numeros_detectados and (
+        any(p in s for p in ["art", "articulo", "los articulos", ","])
+        or len(s.split()) <= 4
+    ):
+        lineas_codigo = CODIGO_PENAL_TEXTO.splitlines()
+        encontrados = []
+        vistos_num = set()
+        for num in numeros_detectados:
+            if num in vistos_num:
+                continue
+            vistos_num.add(num)
+            for linea in lineas_codigo:
+                low = linea.lower()
+                if low.startswith(f"art. {num}:") or low.startswith(f"art {num}:"):
+                    encontrados.append(linea)
+                    break
+        if encontrados:
+            return "**Artículos aplicables:**\n• " + "\n• ".join(encontrados[:35])
 
+    articulos = []
     for palabras_clave, titulo, sancion in REGLAS_LOCALES:
         for k in palabras_clave:
             k_norm = normalizar_texto(k)
@@ -345,10 +364,10 @@ def motor_local_rapido(situacion):
     lista_art = [f"• {item[0]}" for item in articulos_unicos]
     lista_conc = [f"• {item[0]}: {item[1]}" for item in articulos_unicos]
 
-    return f"**Artículos aplicables:**\n" + "\n".join(lista_art) + "\n\n**Conclusión:**\nSanciones correspondientes aplicadas:\n" + "\n".join(lista_conc)
+    return "**Artículos aplicables:**\n" + "\n".join(lista_art) + "\n\n**Conclusión:**\nSanciones correspondientes aplicadas:\n" + "\n".join(lista_conc)
 
 def obtener_respuesta_ia(situacion):
-    if not situacion or len(situacion.strip()) < 3:
+    if not situacion or len(situacion.strip()) < 2:
         return MENSAJE_NO_VALIDO
 
     if not groq_client:
@@ -357,7 +376,7 @@ def obtener_respuesta_ia(situacion):
     system_prompt = (
         "Eres un juez y experto legal del Código Penal Federal para un servidor de roleplay.\n"
         "REGLAS ESTRICTAS:\n"
-        "1. Primero evalúa si el mensaje del usuario describe un delito, infracción, situación jurídica o consulta sobre un artículo del Código Penal.\n"
+        "1. Si el mensaje es una lista de números de artículos (ej. 'Los artículos son 1, 2, 6...'), devuelve el resumen de esos artículos indicados.\n"
         "2. Si el mensaje NO tiene sentido legal, es una pregunta cotidiana o fuera de tema (por ejemplo: '¿cuál es el tiempo de hoy?', 'hola', 'qué tal', 'cuánto es 2+2', bromas sin delito o texto incoherente), responde ÚNICAMENTE con esta frase exacta:\n"
         f"{MENSAJE_NO_VALIDO}\n"
         "3. Si SÍ describe una situación o delito, interpreta su intención real aunque tenga faltas graves de ortografía, abreviaturas o jerga (ej. 'polis', 'elementos', 'fuega', 'fierro', 'plomear', 'darse a la fuga') y extrae TODOS los artículos aplicables sin omitir ninguno.\n"
